@@ -30,6 +30,7 @@ public class Station {
      *
      * @param name     The station's name.
      * @param areaCode The station's unique area code.
+     * @throws DuplicateAreaCodeException if the provided area code is already taken.
      */
     public Station(String name, int areaCode) throws DuplicateAreaCodeException {
         this.name = name;
@@ -71,7 +72,8 @@ public class Station {
     /**
      * Changes the station's area code with the provided identifier.
      *
-     * @param areaCode The station's new araCode.
+     * @param areaCode The station's new areaCode.
+     * @throws DuplicateAreaCodeException if the provided area code is already taken.
      */
     public void setAreaCode(int areaCode) throws DuplicateAreaCodeException {
         if (TAKEN_AREA_CODES.add(areaCode)) {
