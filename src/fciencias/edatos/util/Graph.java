@@ -7,5 +7,7 @@ package fciencias.edatos.util;
  * @author Luis Daniel Aragon Bermudez 416041271
  */
 public interface Graph<T>{
+    int size();
 
+    boolean isEmpty();
 }
