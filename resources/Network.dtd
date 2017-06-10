@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+        <!-- ===========================================================================
+        Network.dtd
+
+        Contains the definition of an .xml file that represents a phone/video network
+        made up of a non-empty set of stations, and links between them. A network is
+        a connected graph, so all stations must be linked. The number of stations and
+        links are given as attributes.
+        ============================================================================= -->
+
+        <!ELEMENT Network (Station+, Link*)>
+        <!ATTLIST Network stations CDATA #REQUIRED>
+        <!ATTLIST Network links CDATA #REQUIRED>
+
+        <!-- A station has a set of clients, and its attributes
+        are the station's name, name, and its unique area code, code. -->
+
+        <!ELEMENT Station (Client*)>
+        <!ATTLIST Station name CDATA #REQUIRED>
+        <!ATTLIST Station code CDATA #REQUIRED>
+
+        <!-- A client can be an empty element whose attributes
+        are the clients name, name, and the clients phone number, phone. -->
+
+        <!ELEMENT Client EMPTY>
+        <!ATTLIST Client name CDATA #REQUIRED>
+        <!ATTLIST Client phone CDATA #REQUIRED>
+
+        <!-- A link can be an empty element whose attributes
+        are the are codes of the two stations that it links. -->
+
+        <!ELEMENT Link EMPTY>
+        <!ATTLIST Link stationACode CDATA #REQUIRED>
+        <!ATTLIST Link stationBCode CDATA #REQUIRED>

@@ -1,5 +1,7 @@
 package fciencias.edatos.network;
 
+import fciencias.edatos.util.Vertex;
+
 import java.util.HashSet;
 
 /**
@@ -9,7 +11,7 @@ import java.util.HashSet;
  * @author Jorge Cortes Lopez.
  * @author Kai Ueda Kawasaki.
  */
-public class Station {
+public class Station implements Vertex<Station> {
 
     private static final HashSet<Integer> TAKEN_AREA_CODES = new HashSet<>();
     /**
@@ -30,16 +32,17 @@ public class Station {
      *
      * @param name     The station's name.
      * @param areaCode The station's unique area code.
+     * @param clients  The station's clients.
      * @throws DuplicateAreaCodeException if the provided area code is already taken.
      */
-    public Station(String name, int areaCode) throws DuplicateAreaCodeException {
+    public Station(String name, int areaCode, HashSet<Client> clients) throws DuplicateAreaCodeException {
         this.name = name;
         if (TAKEN_AREA_CODES.add(areaCode)) {
             this.areaCode = areaCode;
         } else {
             throw new DuplicateAreaCodeException();
         }
-        this.clients = new HashSet<>();
+        this.clients = clients;
     }
 
     /**

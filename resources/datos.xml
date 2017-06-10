@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Network SYSTEM "Network.dtd">
+<Network stations="5" links="4">
+    <Station name="Ciudad de Mexico" code="1">
+        <Client name="Carlos" phone="56581111"/>
+        <Client name="Joaquin" phone="55667788"/>
+    </Station>
+
+    <Station name="Morelia" code="2">
+        <Client name="Pedro" phone="55771122"/>
+    </Station>
+
+    <Station name="Cuernavaca" code="3">
+        <Client name="Raúl" phone="55443322"/>
+    </Station>
+
+    <Station name="Pachuca" code="4">
+        <Client name="Luis" phone="11223311"/>
+    </Station>
+
+    <Station name="Tlaxcala" code="5">
+        <Client name="Juan" phone="55443322"/>
+    </Station>
+
+    <Link stationACode="1" stationBCode="2"/>
+
+    <Link stationACode="2" stationBCode="4"/>
+
+    <Link stationACode="4" stationBCode="5"/>
+
+    <Link stationACode="3" stationBCode="1"/>
+
+</Network>
+
+
+
