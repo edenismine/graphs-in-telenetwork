@@ -6,4 +6,10 @@ package fciencias.edatos.network;
  * @author Luis Daniel Aragon Bermudez 416041271
  */
 public class DuplicateAreaCodeException extends Exception {
+    public DuplicateAreaCodeException() {
+    }
+
+    public DuplicateAreaCodeException(String message) {
+        super(message);
+    }
 }
