@@ -1,15 +1,45 @@
 package fciencias.edatos.network;
 
-import fciencias.edatos.util.Graph;
+import fciencias.edatos.util.LabeledGraph;
 import fciencias.edatos.util.UnstableGraphException;
-import fciencias.edatos.util.Vertex;
 
 import java.util.Hashtable;
 
 /**
+ * TODO: implement stubs.
  * @author Luis Daniel Aragon Bermudez 416041271
  */
-public class Network implements Graph<Station> {
+public class Network implements LabeledGraph<Station> {
+    /**
+     * The network's stations.
+     */
+    private Hashtable<Integer, Station> stations = new Hashtable<>();
+
+    @Override
+    public boolean addVertex(int label, Station vertex) throws UnstableGraphException {
+        return false;
+    }
+
+    @Override
+    public boolean addEdge(int fromV, int toU) throws UnstableGraphException {
+        return false;
+    }
+
+    @Override
+    public Station getVertex(int vertexKey) {
+        return null;
+    }
+
+    @Override
+    public Hashtable<Integer, Station> getLabeledVertices() {
+        return stations;
+    }
+
+    @Override
+    public boolean areAdjacent(int fromV, int toV) throws UnstableGraphException {
+        return false;
+    }
+
     @Override
     public int edgesSize() throws UnstableGraphException {
         return 0;
@@ -26,32 +56,7 @@ public class Network implements Graph<Station> {
     }
 
     @Override
-    public boolean addVertex(Vertex<Station> vertex) throws UnstableGraphException {
-        return false;
-    }
-
-    @Override
-    public boolean addEdge(Vertex<Station> fromV, Vertex<Station> toV) throws UnstableGraphException {
-        return false;
-    }
-
-    @Override
-    public Vertex<Station> getVertex(Station VertexKey) {
-        return null;
-    }
-
-    @Override
-    public Hashtable<Station, Vertex<Station>> getVertices() {
-        return null;
-    }
-
-    @Override
-    public boolean contains(Vertex<Station> vertex) {
-        return false;
-    }
-
-    @Override
-    public boolean areAdjacent(Vertex<Station> fromV, Vertex<Station> toV) throws UnstableGraphException {
+    public boolean contains(Station vertex) {
         return false;
     }
 }
