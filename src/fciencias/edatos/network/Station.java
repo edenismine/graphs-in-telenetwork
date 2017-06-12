@@ -91,7 +91,8 @@ public class Station {
     }
 
     /**
-     * Retrieves the current clients connected to the station.
+     * Retrieves the set of currently connected clients. Changes to the obtained set will
+     * not be reflected by the station, if you need to modify this station's clients use addClient().
      *
      * @return The clients currently connected to the station.
      */
@@ -171,7 +172,7 @@ public class Station {
      *
      * @return True if a new edge was created, False if the edge already existed.
      */
-    public boolean addNeighbor(Station neighbor) {
+    boolean addNeighbor(Station neighbor) {
         if (neighbor == null) throw new IllegalArgumentException("Null station.");
         if (this.equals(neighbor)) throw new UnstableGraphException("Loops cannot be added to a simple graph.");
         // if edge already exists return false, else add neighbor and force edge creation through isAdjacent,
