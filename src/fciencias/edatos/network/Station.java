@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 /**
  * Station class that represents the network's stations. These stations are also labeled vertices, which means
- * that they can be used more easily bu the network; their area code is their unique label. Since the network
+ * that they can be used more easily by the network; their area code is their unique label. Since the network
  * is a labeled graph, the following should hold true:
  * If {@code v} and {@code u} are labels, then:
  * <ol>

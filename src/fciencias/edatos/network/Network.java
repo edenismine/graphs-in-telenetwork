@@ -17,7 +17,7 @@ public class Network implements LabeledGraph<Station> {
     private Hashtable<Integer, Station> stations = new Hashtable<>();
 
     @Override
-    public boolean addVertex(int label, Station vertex) throws UnstableGraphException {
+    public boolean addVertex(int label, Station vertex) throws UnstableGraphException, IllegalArgumentException {
         if (vertex == null || label < 0)
             throw new IllegalArgumentException("Vertex labels must be non-negative. Vertices must be non-null.");
         if (label != vertex.getAreaCode()) throw new UnstableGraphException("The provided areaCode does not match.");
@@ -26,7 +26,7 @@ public class Network implements LabeledGraph<Station> {
     }
 
     @Override
-    public boolean addEdge(int fromV, int toU) throws UnstableGraphException {
+    public boolean addEdge(int fromV, int toU) throws UnstableGraphException, IllegalArgumentException {
         if (fromV < 0 || toU < 0) throw new IllegalArgumentException("Vertex labels must be non-negative.");
         if (fromV == toU) throw new UnstableGraphException("Loops cannot be added to a simple graph.");
         // Get corresponding vertices.
@@ -36,7 +36,7 @@ public class Network implements LabeledGraph<Station> {
     }
 
     @Override
-    public boolean addEdge(Station v, Station u) throws UnstableGraphException {
+    public boolean addEdge(Station v, Station u) throws UnstableGraphException, IllegalArgumentException {
         if (v == null || u == null) throw new IllegalArgumentException("Null station.");
         if (v.equals(u)) throw new UnstableGraphException("Loops cannot be added to a simple graph.");
         return v.addNeighbor(u);
@@ -57,6 +57,9 @@ public class Network implements LabeledGraph<Station> {
      * This method doesn't explore the graph exhaustively, and checks if its degree sequence is graphical.
      * If the network is assumed to be stable, this method is quicker than rebuilding the network and then
      * counting the edges using the handshaking lemma.
+     *
+     * @return How many edges are in the graph.
+     * @throws UnstableGraphException if an invalid network is detected while performing this call.
      */
     public int quickEdgesSize() throws UnstableGraphException {
         int n = stations.size();
@@ -138,7 +141,7 @@ public class Network implements LabeledGraph<Station> {
     }
 
     @Override
-    public boolean areAdjacent(int i, int j) {
+    public boolean areAdjacent(int i, int j) throws IllegalArgumentException {
         if (i < 0 || j < 0) throw new IllegalArgumentException("Labels should be non-negative.");
         Station a = stations.get(i);
         Station b = stations.get(j);
