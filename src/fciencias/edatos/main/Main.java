@@ -1,5 +1,11 @@
 package fciencias.edatos.main;
 
+import fciencias.edatos.network.Network;
+import fciencias.edatos.network.NetworkLoader;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,8 +32,20 @@ public class Main {
     private static final String BUBBLES = "";
     private static final String DOUCHEBAG = "";
     private static final String[] EXIT_ANIMATION_FRAMES = {};
+    private static final String RESOURCES = "resources/";
+    private static final Network NETWORK = loadNetwork();
     private static Scanner stdin;
     private static int cols;
+
+    private static Network loadNetwork() {
+        Network network = null;
+        try {
+            network = NetworkLoader.newInstance().read(RESOURCES + "network.xml");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            error(e.getMessage());
+        }
+        return network;
+    }
 
     /**
      * Main menu.
@@ -40,7 +58,7 @@ public class Main {
         boolean close = false;
         String userProvidedString = "";
 
-        boolean condition = false; // TODO
+        boolean condition = NETWORK != null;
 
         do {
             flush();
@@ -54,7 +72,7 @@ public class Main {
                 }
             } else {
                 regex = OPS_DEFAULT;
-                error("ChemTools didn't initialize successfully, unable to load program, check the logs.");
+                error("Network wasn't loaded successfully, check the logs for more information.");
             }
 
             // This shows the previous result.
