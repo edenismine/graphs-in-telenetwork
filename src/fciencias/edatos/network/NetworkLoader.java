@@ -1,5 +1,6 @@
 package fciencias.edatos.network;
 
+import fciencias.edatos.util.UnstableGraphException;
 import fciencias.edatos.xml.ToXML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -78,8 +79,27 @@ public class NetworkLoader implements ToXML<Network> {
                 if (station != null)
                     network.addVertex(station.getAreaCode(), station);
                 else throw new SAXException("Invalid network .xml file. Found invalid station tag.");
+            }
 
-                // TODO: extract Link tags.
+            // Extract Link tags.
+            NodeList linkTags = doc.getElementsByTagName("Link");
+            int stationACode, stationBCode;
+            // Traverse the list of Link tags.
+            for (int i = 0; i < linkTags.getLength(); i++) {
+                // Reset tmp variables.
+                stationACode = stationBCode = -1;
+                // Get actual Link tag.
+                Node linkTag = linkTags.item(i);
+                if (linkTag.getNodeType() == Node.ELEMENT_NODE) { // Formality, if .xml is valid this is redundant.
+                    // Casting to Element so we can use getElementsByTagName.
+                    Element stationElement = (Element) linkTag;
+                    // Getting the link's attributes.
+                    stationACode = Integer.parseInt(stationElement.getAttribute("stationACode"));
+                    stationBCode = Integer.parseInt(stationElement.getAttribute("stationBCode"));
+                }
+                // After parsing link, create edge. (Fails if tag is not element node)
+                // log.println(String.format("Found following link:\t{%d, %d}%n", stationACode, stationBCode));
+                network.addEdge(stationACode, stationBCode);
             }
 
             // log.println("[END at " + timestamp() + "] SUCCESS: read terminated successfully.");
@@ -96,7 +116,10 @@ public class NetworkLoader implements ToXML<Network> {
 
         } catch (DuplicateAreaCodeException e) {
             throw new SAXException("Invalid network .xml file. Duplicate area code found.");
+        } catch (UnstableGraphException e) {
+            throw new SAXException("Invalid network .xml file, it doesn't construct an simple undirected labeled graph.");
         }
+
         return network;
     }
 

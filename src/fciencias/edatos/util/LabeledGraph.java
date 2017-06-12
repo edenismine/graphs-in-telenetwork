@@ -1,6 +1,6 @@
 package fciencias.edatos.util;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * <h1>Labeled Graph interface.</h1>
@@ -24,8 +24,6 @@ import java.util.Hashtable;
  * If {@code g} is a Graph, {@code v} and {@code u} are labels, and {@code t} is an object of type {@code T}, then:
  * <ol>
  * <li>For {@code g.contains(T)} to return true it's necessary that {@code g.addVertex(v, T)} was called in the past.</li>
- * <li>If {@code v} and {@code u} are in the graph, {@code g.areAdjacent(v,u)} <b>iff</b> {@code g.areAdjacent(u,v)}.</li>
- * <li>For {@code g.areAdjacent(v,u)} to return true it's necessary that {@code g.addEdge(v,u)} was called in the past. (It's very important that the implementation guarantees this.)</li>
  * </ol>
  *
  * @param <T> Type associated to the vertices of the graph.
@@ -50,8 +48,20 @@ public interface LabeledGraph<T> {
      * @param toU   the label of the second vertex of the edge.
      * @return True if the graph was modified as a result of this operation, false otherwise.
      * @throws UnstableGraphException if completing this call would result in an unstable or invalid graph.
+     * @throws IllegalArgumentException if invalid labels are given.
      */
     boolean addEdge(int fromV, int toU) throws UnstableGraphException;
+
+    /**
+     * Adds an edge between the provided stations.
+     *
+     * @param v the first station.
+     * @param u the second station.
+     * @return True if the graph was modified as a result of this operation, false otherwise.
+     * @throws UnstableGraphException   if completing this call would result in an unstable or invalid graph.
+     * @throws IllegalArgumentException if invalid labels are given.
+     */
+    boolean addEdge(T v, T u) throws UnstableGraphException;
 
     /**
      * Finds the vertex corresponding to the given label.
@@ -60,23 +70,6 @@ public interface LabeledGraph<T> {
      * @return The vertex that is labeled with the given vertexKey, null if it's not in the graph.
      */
     T getVertex(int vertexKey);
-
-    /**
-     * Returns the dictionary of label-vertex pairs of this graph.
-     *
-     * @return this graph's set of labeled vertices.
-     */
-    Hashtable<Integer, T> getLabeledVertices();
-
-    /**
-     * Tests if two vertices are adjacent using their labels. Ie, if there's an edge connecting them.
-     *
-     * @param fromV the label of the first vertex of the edge.
-     * @param toV   the label of the second vertex of the edge.
-     * @return True if the edge exists, false otherwise.
-     * @throws UnstableGraphException if while completing this call an unstable or invalid graph is detected.
-     */
-    boolean areAdjacent(int fromV, int toV) throws UnstableGraphException;
 
     /**
      * Retrieves the cardinality of this graph's edge set. Per theorem 1, this is is half of the sum of the graph's vertices' degrees.
@@ -90,7 +83,7 @@ public interface LabeledGraph<T> {
      * Retrieves the cardinality of this graph's vertex set.
      *
      * @return How many vertices are in this graph.
-     * * @throws UnstableGraphException   if while completing this call an unstable or invalid graph is detected.
+     * @throws UnstableGraphException   if while completing this call an unstable or invalid graph is detected.
      */
     int verticesSize() throws UnstableGraphException;
 
@@ -108,4 +101,25 @@ public interface LabeledGraph<T> {
      * @return True if the labeledVertex is inside the graph, false otherwise.
      */
     boolean contains(T vertex);
+
+    /**
+     * Retrieves the graph's vertices.
+     *
+     * @return A map whose keys are labels, and values are the vertices.
+     */
+    Map<Integer, T> getLabeledVertices();
+
+    /**
+     * Given two labels checks for adjacency between the corresponding vertices.
+     *
+     * @return True if the corresponding vertices are adjacent, false otherwise.
+     */
+    boolean areAdjacent(int i, int j);
+
+    /**
+     * Given two vertices checks for adjacency between them.
+     *
+     * @return True if the vertices are adjacent, false otherwise.
+     */
+    boolean areAdjacent(T v, T u);
 }
