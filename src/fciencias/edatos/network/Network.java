@@ -50,6 +50,15 @@ public class Network implements LabeledGraph<Station> {
 
     @Override
     public int edgesSize() throws UnstableGraphException {
+        return degreeSum() / 2;
+    }
+
+    /**
+     * This method doesn't explore the graph exhaustively, and checks if its degree sequence is graphical.
+     * If the network is assumed to be stable, this method is quicker than rebuilding the network and then
+     * counting the edges using the handshaking lemma.
+     */
+    public int quickEdgesSize() throws UnstableGraphException {
         int n = stations.size();
         ArrayList<Integer> degreeSequence = new ArrayList<>(n);
         int acc = 0;
@@ -170,5 +179,27 @@ public class Network implements LabeledGraph<Station> {
             }
         }
         return false;
+    }
+
+    /**
+     * Consolidates the graph, counting all vertices, then adds their degrees and returns teh network's degree sum.
+     *
+     * @return The degree sum of this network.
+     */
+    @Override
+    public int degreeSum() throws UnstableGraphException {
+        int n = verticesSize();
+        int acc = 0;
+        for (Station station : stations.values()) {
+            int d = station.degree();
+            if (d < n) {
+                acc += d;
+            } else {
+                throw new UnstableGraphException("The degree of a vertex exceeds the available vertices in the graph, therefore this can't be a simple graph.");
+            }
+        }
+        if (acc % 2 != 0)
+            throw new UnstableGraphException("A graph with odd number of odd degree vertices was found, this can't be a valid graph.");
+        return acc;
     }
 }

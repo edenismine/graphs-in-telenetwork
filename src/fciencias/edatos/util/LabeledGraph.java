@@ -47,7 +47,7 @@ public interface LabeledGraph<T> {
      * @param fromV the label of the first vertex of the edge.
      * @param toU   the label of the second vertex of the edge.
      * @return True if the graph was modified as a result of this operation, false otherwise.
-     * @throws UnstableGraphException if completing this call would result in an unstable or invalid graph.
+     * @throws UnstableGraphException   if completing this call would result in an unstable or invalid graph.
      * @throws IllegalArgumentException if invalid labels are given.
      */
     boolean addEdge(int fromV, int toU) throws UnstableGraphException;
@@ -83,9 +83,17 @@ public interface LabeledGraph<T> {
      * Retrieves the cardinality of this graph's vertex set.
      *
      * @return How many vertices are in this graph.
-     * @throws UnstableGraphException   if while completing this call an unstable or invalid graph is detected.
+     * @throws UnstableGraphException if while completing this call an unstable or invalid graph is detected.
      */
     int verticesSize() throws UnstableGraphException;
+
+    /**
+     * Calculates the degree sum of the graph.
+     *
+     * @return The degree sum of the graph.
+     * @throws UnstableGraphException if while completing this call an unstable or invalid graph is detected.
+     */
+    int degreeSum() throws UnstableGraphException;
 
     /**
      * Checks if the graph is empty.
