@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
  * @author Luis Daniel Aragon Bermudez 416041271
  */
 public class Main {
+    private static final Network NETWORK = loadNetwork(); // TODO: This must be the topmost statement.
     private static final String AREA_CODE = loadAreaCodes(); // TODO: ensure this line is always below the initialization of NETWORK.
     private static final String N = "\u001B[0m"; // resets terminal color
     private static final String R = "\u001B[91m"; // red, error.
@@ -37,7 +38,6 @@ public class Main {
             "sendPubBy\\s+" + AREA_CODE};
     private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
     private static final String RESOURCES = "resources/";
-    private static final Network NETWORK = loadNetwork(); // TODO: This must be the topmost statement.
     private static final String TITLE = NETWORK != null ? "Network manager" : "ERROR";
     private static Scanner stdin;
     private static int cols;
@@ -232,6 +232,16 @@ public class Main {
                     break;
                 // send publicity to all
                 case 1:
+                    List<Client> results;
+                    if (task.contains("phone")) {
+                        results = NETWORK.getAllClientsByPhone();
+                        message = "Publicity was sent to all clients in order by their phone number.";
+                    } else {
+                        results = NETWORK.getAllClientsByStation();
+                        message = "Publicity was sent to all clients in order by their area code.";
+                    }
+                    for (Client client : results)
+                        display(client.toString());
                     break;
                 // send publicity to some
                 case 2:
@@ -241,7 +251,7 @@ public class Main {
             }
             success(task);
             display(message);
-            sleep(1000);
+            sleep(10000);
             return message;
         }
         message = "Invalid task: " + task;
