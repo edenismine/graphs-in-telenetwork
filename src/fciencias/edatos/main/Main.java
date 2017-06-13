@@ -276,4 +276,74 @@ public class Main {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+    
+     /**
+     * This method is in charge of handling the different instructions available
+     * to the user, updating the program's attributes accordingly and returning
+     * a descriptive message. It decides which task to perform by analyzing the
+     * provided String.
+     *
+     * @param task
+     *            String that represents the task that should be performed.
+     * @return a descriptive message with information about what was done or
+     *         could not be done.
+     */
+    private static String advancedTask(String task) {
+        String defaultMessage = "Encountered an error while managing the following task: " + task;
+        String message = defaultMessage;
+        String[] args = new String[3];
+        if (!task.isEmpty()) {
+            int taskID = -1;
+            if (task.matches(OPS_LOADED_REGEX[0])) {
+                taskID = 0;
+                args = task.split("\\s+");
+                break;
+            }
+            if(task.equals("publicity")){
+                taskID = 1;
+                break;
+            }
+            switch (taskID) {
+            case 0:
+                //Aun no sabemos nombre del método. Regresa una lista con las estaciones.
+                LinkedList<Station> stationList = network.metodoParaLlamar(args[1], args[2]);
+                if(stationList != null){
+                    System.out.println("Connection was established correctly.");
+                    System.out.println("The path of connection is:");
+                    //Suponemos que existe una lista de "Station" que contiene el camino.
+                    for(int i = 0; i < stationList.size(); i++){
+                        System.out.print(estacion.getStationName());
+                        if(i != (stationList.size() - 1))
+                            System.out.print(" --> ");
+                    }
+                    System.out.print("\n");
+                }
+                else{
+                    System.out.println("Connection couldn't be established try again with other phone numbers.");
+                }
+                break;
+            case 1:
+                //Aun no sabemos nombre del método. Regresa una lista con el orden de publicidad.
+                LinkedList<Station> stationList = network.metodoParaPublicidad();
+                if(stationList != null){
+                    System.out.println("Advertising was sent correctly.");
+                    System.out.println("The advertising was sent to clients in the order:");
+                    for(int i = 0; i < stationList.size(); i++){
+                        System.out.print(estacion.getStationName());
+                        if(i != (stationList.size() - 1))
+                            System.out.print(" --> ");
+                    }
+                    System.out.print("\n");
+                }
+                else{
+                    System.out.println("There's an error in the database or something else happened");
+                }
+            default:
+                break;
+            }
+            return message;
+        }
+        message = "Invalid task: " + task;
+        return message;
+    }
 }
