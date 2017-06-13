@@ -12,16 +12,17 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import java.io.IOException;
 import java.util.HashSet;
+
+// import javax.xml.transform.TransformerFactory;
 
 /**
  * @author Luis Daniel Aragon Bermudez 416041271
  */
 public class NetworkLoader implements ToXML<Network> {
     private final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    private final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    // private final TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
     public static NetworkLoader newInstance() {
         return new NetworkLoader();
@@ -125,7 +126,6 @@ public class NetworkLoader implements ToXML<Network> {
 
     @Override
     public boolean write(Network object, String fileName) throws ParserConfigurationException, TransformerException {
-        // TODO: implement.
-        return false;
+        throw new UnsupportedOperationException("Network modification must be done manually. Support for Network saving underway.");
     }
 }
