@@ -245,13 +245,21 @@ public class Main {
                     break;
                 // send publicity to some
                 case 2:
+                    Station station = NETWORK.getVertex(Integer.parseInt(getGroup(OPS_LOADED_REGEX[2], task, 1)));
+                    if (station == null) {
+                        message = "Station does not exist within the network, could not send publicity.";
+                        break;
+                    }
+                    message = "Sent publicity to all clients in " + station.getAreaCode() + " : " + station.getStationName() + ".";
+                    for (Client client : station.getClients())
+                        display(client.toString());
                     break;
                 default:
                     break;
             }
-            success(task);
             display(message);
-            sleep(10000);
+            display("Press enter to return");
+            getValidString(".*");
             return message;
         }
         message = "Invalid task: " + task;
