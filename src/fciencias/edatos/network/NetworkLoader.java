@@ -15,14 +15,12 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.HashSet;
 
-// import javax.xml.transform.TransformerFactory;
 
 /**
  * @author Luis Daniel Aragon Bermudez 416041271
  */
 public class NetworkLoader implements ToXML<Network> {
     private final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    // private final TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
     public static NetworkLoader newInstance() {
         return new NetworkLoader();
