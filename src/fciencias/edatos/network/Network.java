@@ -321,10 +321,11 @@ public class Network implements LabeledGraph<Station> {
         int n = verticesSize();
         ArrayList<Client> clients = new ArrayList<>(n * 5);
         ArrayList<Client> stationClients;
-        // Iterate over stations.
-        Enumeration<Station> stations = this.stations.elements();
-        while (stations.hasMoreElements()) {
-            stationClients = new ArrayList<>(stations.nextElement().getClients());
+        // Iterate over sorted stations.
+        ArrayList<Station> stations = new ArrayList<>(this.stations.values());
+        Collections.sort(stations);
+        for (Station station : stations) {
+            stationClients = new ArrayList<>(station.getClients());
             Collections.sort(stationClients);
             clients.addAll(stationClients);
         }

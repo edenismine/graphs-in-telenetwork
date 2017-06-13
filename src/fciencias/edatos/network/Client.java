@@ -81,9 +81,8 @@ public class Client implements Comparable<Client> {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Name: ").append(this.name).append("  ").
-                append("Area: ").append(this.areaCode).append("  ").
-                append("Phone:").append(this.phone);
+        builder.append("(").append(this.areaCode).append(")\t").
+                append(this.phone).append("\t").append(this.name);
         return builder.toString();
     }
 

@@ -212,15 +212,15 @@ public class Main {
 
                     List<Station> trajectory = NETWORK.getTrajectory(codeA, codeB);
                     if (!trajectory.isEmpty()) {
-                        StringBuilder builder = new StringBuilder("This is the trajectory between the clients: ");
+                        StringBuilder builder = new StringBuilder("This is the trajectory between the clients:\n");
                         String separator = " --> ";
                         Iterator<Station> iter = trajectory.iterator();
                         while (iter.hasNext()) {
                             Station station = iter.next();
                             if (iter.hasNext()) {
-                                builder.append(station.getAreaCode()).append(separator);
+                                builder.append(station.getAreaCode()).append(" : ").append(station.getStationName()).append(separator);
                             } else {
-                                builder.append(station.getAreaCode());
+                                builder.append(station.getAreaCode()).append(" : ").append(station.getStationName());
                             }
                         }
                         message = builder.toString();
