@@ -129,7 +129,7 @@ public class Network implements LabeledGraph<Station> {
      *
      * @return The trajectory if it exists, null otherwise.
      */
-    public List<Station> getTrajectory(int areaCode) {
+    public List<Station> getTrajectory(Station root, int areaCode) {
         /**
          * This class represent a Parent,Station pair, useful for representing the trajectory as a list.
          */
