@@ -9,6 +9,10 @@ package fciencias.edatos.network;
  */
 public class Client implements Comparable<Client> {
     /**
+     * The client's area code.
+     */
+    private final int areaCode;
+    /**
      * The client's name.
      */
     private String name;
@@ -23,9 +27,10 @@ public class Client implements Comparable<Client> {
      * @param name  The client's name.
      * @param phone The client's phone number.
      */
-    public Client(String name, int phone) {
+    public Client(String name, int phone, int areaCode) {
         this.name = name;
         this.phone = phone;
+        this.areaCode = areaCode;
     }
 
     /**
@@ -64,10 +69,20 @@ public class Client implements Comparable<Client> {
         this.phone = phone;
     }
 
+    /**
+     * Retrieves the area code of the client.
+     *
+     * @return The client's area code.
+     */
+    public int getAreaCode() {
+        return areaCode;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Name: ").append(this.name).append("  ").
+                append("Area: ").append(this.areaCode).append("  ").
                 append("Phone:").append(this.phone);
         return builder.toString();
     }

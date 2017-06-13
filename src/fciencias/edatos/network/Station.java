@@ -116,9 +116,11 @@ public class Station implements Comparable<Station> {
      * Adds a client to the station, and returns a boolean to indicate if the station was modified as a result.
      *
      * @param client The client that should be added to the station.
-     * @return True if the provided client was indeed a new, false otherwise.
+     * @return True if the provided client was indeed new, false otherwise.
      */
     public boolean addClient(Client client) {
+        if (client.getAreaCode() != areaCode)
+            throw new IllegalArgumentException("This client does not belong to this area. Expecting: " + areaCode + " Got:" + client.getAreaCode());
         return clients.add(client);
     }
 

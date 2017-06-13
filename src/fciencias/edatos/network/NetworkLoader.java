@@ -66,7 +66,7 @@ public class NetworkLoader implements ToXML<Network> {
                             String name = clientElement.getAttribute("name");
                             int phone = Integer.parseInt(clientElement.getAttribute("phone"));
                             // Adding a new client to this station's set of clients.
-                            clients.add(new Client(name, phone));
+                            clients.add(new Client(name, phone, areaCode));
                         }
                     }
                     // After adding all clients, create station.
