@@ -1,5 +1,14 @@
 package fciencias.edatos.main;
 
+import fciencias.edatos.network.Network;
+import fciencias.edatos.network.NetworkLoader;
+import fciencias.edatos.network.Station;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,117 +20,48 @@ import java.util.regex.Pattern;
  * @author Luis Daniel Aragon Bermudez 416041271
  */
 public class Main {
-    private static final String TITLE = "MOLECULAR MASS CALCULATOR";
+    private static final String AREA_CODE = loadAreaCodes(); // TODO: ensure this line is always below the initialization of NETWORK.
     private static final String N = "\u001B[0m"; // resets terminal color
     private static final String R = "\u001B[91m"; // red, error.
     private static final String G = "\u001B[92m"; // green, success.
     private static final String Y = "\u001B[93m"; // yellow, prompt.
     private static final String C = "\u001B[96m"; // blue, display.
-    private static final String SYMBOLS = "(Ac|Ag|Al|Am|Ar|As|At|Au|Ba|Be|Bh|Bi|Bk|Br|B|Ca|Cd|Ce|Cf|Cl|Cm|Cn|Co|Cr|Cs|Cu|C|Db|Ds|Dy|Er|Es|Eu|Fe|Fl|Fm|Fr|F|Ga|Gd|Ge|He|Hf|Hg|Ho|Hs|H|In|Ir|I|Kr|K|La|Li|Lr|Lu|Lv|Md|Mg|Mn|Mo|Mt|Na|Nb|Nd|Ne|Ni|No|Np|N|Os|O|Pa|Pb|Pd|Pm|Po|Pr|Pt|Pu|P|Ra|Rb|Re|Rf|Rg|Rh|Rn|Ru|Sb|Sc|Se|Sg|Si|Sm|Sn|Sr|S|Ta|Tb|Tc|Te|Th|Ti|Tl|Tm|Uuo|Uup|Uus|Uut|U|V|W|Xe|Yb|Y|Zn|Zr)([1-9]?(?<=[1-9])\\d*)?";
     private static final String OPS_DEFAULT = "[xX]";
-    private static final String OPS_LOADED = OPS_DEFAULT + "|(" + SYMBOLS + "\\.)*(" + SYMBOLS + ")";
-    private static final String EXIT_MESSAGE = "    \tLOOK WHAT YOU JUST DID!\n        \tYOU DROPPED CHEMICAL X!\n" + "\t\t .----------------. \n" + "\t\t| .--------------. |\n" + "\t\t| |  ____  ____  | |\n" + "\t\t| | |_  _||_  _| | |\n" + "\t\t| |   \\ \\  / /   | |\n" + "\t\t| |    > `' <    | |\n" + "\t\t| |  _/ /'`\\ \\_  | |\n" + "\t\t| | |____||____| | |\n" + "\t\t| |              | |\n" + "\t\t| '--------------' |\n" + "\t\t '----------------'";
-    private static final String BLOSSOM = "        Blossom\n" +
-            "\n" +
-            "      /\\        _/\\\n" +
-            "     |  \\      /   |\n" +
-            "     |   | __ /   |\n" +
-            "     |    |  |   |\n" +
-            "      |..------..|\n" +
-            "    .-~ /\\    \\\\ ~-.\n" +
-            "   / ~~~  ~~~~~ ~~~ \\\n" +
-            "  | *  |     | *  | ||\n" +
-            "  |--'/       \\ -'.' |\n" +
-            "   \\~    |_|   ~~~~~/\n" +
-            ".--_~-.._      __.-~\n" +
-            "`-._~~~  ~~~~~~  |\\\n" +
-            "    ~~~~|______| | |\n" +
-            "      / |______| |  \\\n" +
-            "   \\-~ /|      | |\\  ~-/\n" +
-            "    ~-._|______`-'_.--~\n" +
-            "        |  |   |~~\n" +
-            "        |__|___|\n" +
-            "        |_|| _||\n" +
-            "        `--'`--'";
-    private static final String BUBBLES = "                       Bubbles\n" +
-            "\n" +
-            "                      ..------..\n" +
-            "               /~~-.-~__-'`-__  ~-.  .-~-.\n" +
-            "              |   /~~~\\     / ~~---\\|     |\n" +
-            "              |  ||| * |   | | |  * |     |\n" +
-            "              /_-|\\ \\ /     \\ \\ \\__.|\\.  |\n" +
-            "              ~   \\~~   |_|   ~~~~ /   ~-.\\\n" +
-            "                   ~-.._      _.-~~\n" +
-            "                     .--~~~~~~--.\n" +
-            "                    |  |______|  |\n" +
-            "                     ~-|______|-~\n" +
-            "                       |      |\n" +
-            "                       |______|\n" +
-            "                       |  |   |\n" +
-            "                       |__|___|\n" +
-            "                       |_|| _||\n" +
-            "                       `--'`--'";
-    private static final String DOUCHEBAG = "                                        DOUCHEBAG\n" +
-            "\n" +
-            "                                         ..------..\n" +
-            "                                      .-~          ~-.\n" +
-            "                                  ._ /_______/\\_______\\ _.\n" +
-            "                                  \\ | | |* |    | *| | | /\n" +
-            "                                   \\|\\_\\  /  _   \\  /_/|/\n" +
-            "                                     \\ ~~~  | |   ~~~ /\n" +
-            "                                      ~-.._      _..-~\n" +
-            "                                        .- ~~~~~~ -.\n" +
-            "                                       / .|______|. \\\n" +
-            "                                      | (.|______|.) |\n" +
-            "                                       \\._)      (_./\n" +
-            "                                          |______|\n" +
-            "                                          |  |   |\n" +
-            "                                          |__|___|\n" +
-            "                                          |_|| _||\n" +
-            "                                          `--'`--'";
-    private static final String[] EXPLOSION_FRAMES = {
-            R + "\n\n\n" +
-                    "\t\t     ..-^~~~^-..\n" +
-                    "\t\t   .~           ~.\n" +
-                    "\t\t  (;:           :;)\n" +
-                    "\t\t   (:           :)\n" +
-                    "\t\t     ':._   _.:'\n" +
-                    "\t\t         | |\n" +
-                    "\t\t       (=====)\n" +
-                    "\t\t         | |\n" +
-                    "\t\t         | |\n" +
-                    "\t\t         | |\n" +
-                    "\t\t      ((/   \\))" + N,
-            R + "\n\n\n" +
-                    "\t\t        ..-^~~~^-..\n" +
-                    "\t\t      .~           ~.\n" +
-                    "\t\t     (;:           :;)\n" +
-                    "\t\t      (:           :)\n" +
-                    "\t\t        ':._   _.:'\n" +
-                    "\t\t            | |\n" +
-                    "\t\t          (=====)\n" +
-                    "\t\t            | |\n" +
-                    "\t\t            | |\n" +
-                    "\t\t            | |\n" +
-                    "\t\t         ((/   \\))" + N,
-            R + "\n\n\n" +
-                    "\t\t          ..-^~~~^-..\n" +
-                    "\t\t        .~           ~.\n" +
-                    "\t\t       (;:           :;)\n" +
-                    "\t\t        (:           :)\n" +
-                    "\t\t          ':._   _.:'\n" +
-                    "\t\t              | |\n" +
-                    "\t\t            (=====)\n" +
-                    "\t\t              | |\n" +
-                    "\t\t              | |\n" +
-                    "\t\t              | |\n" +
-                    "\t\t           ((/   \\))" + N
-
-    };
-    private static final String[] OPS_LOADED_DESCRIPTIONS = {"input molecules as follows: \n\t" + G + "symbols followed by number of atoms, separated using '.'\n\texample: 'H2.O'" + N};
-    private static final String[] OPS_LOADED_REGEX = {"(" + SYMBOLS + "\\.)*(" + SYMBOLS + ")"};
+    private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "|publicity (phone|areaCode)";
+    private static final String EXIT_MESSAGE = "1\n2\n3\n4";
+    private static final String[] OPS_LOADED_DESCRIPTIONS = {
+            "To place a call use the following syntax:" + G + "\n\tcall areaCode-XXXXXXXX areaCode-XXXXXXXX" + Y + "\n\texample: 'call 55-12345678 801-22334455'" + N,
+            "To send publicity to all clients use:" + G + "\n\tpublicity (phone|areaCode)" + Y + "\n\texample: 'publicity phone'" + N,
+            "To send publicity to all clients use:" + G + "\n\tpublicity (phone|areaCode)" + Y + "\n\texample: 'publicity phone'" + N};
+    private static final String[] OPS_LOADED_REGEX = {"call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE};
+    private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
+    private static final String RESOURCES = "resources/";
+    private static final Network NETWORK = loadNetwork(); // TODO: This must be the topmost statement.
+    private static final String TITLE = NETWORK != null ? "Network manager" : "ERROR";
     private static Scanner stdin;
     private static int cols;
+
+    private static Network loadNetwork() {
+        Network network = null;
+        try {
+            network = NetworkLoader.newInstance().read(RESOURCES + "network.xml");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            error(e.getMessage());
+        }
+        return network;
+    }
+
+    private static String loadAreaCodes() {
+        ArrayList<Integer> areaCodes = Station.getAreaCodes();
+        if (areaCodes.size() == 0) return "ERROR";
+        Collections.sort(areaCodes, Collections.reverseOrder());
+        StringBuilder builder = new StringBuilder().append("(");
+        for (int code : areaCodes)
+            builder.append(code).append('|');
+        builder.deleteCharAt(builder.length() - 1);
+        builder.append(')');
+        return builder.toString();
+    }
 
     /**
      * Main menu.
@@ -132,10 +72,9 @@ public class Main {
         init(args);
 
         boolean close = false;
-        String molecule = "";
-        double molecularMass = 0;
+        String userProvidedString = "";
 
-        boolean condition = false; // TODO
+        boolean condition = NETWORK != null;
 
         do {
             flush();
@@ -149,23 +88,22 @@ public class Main {
                 }
             } else {
                 regex = OPS_DEFAULT;
-                error("ChemTools didn't initialize successfully, unable to load program, check the logs.");
+                error("Network wasn't loaded successfully, check the logs for more information.");
             }
 
             // This shows the previous result.
-            if (!molecule.isEmpty() && molecularMass > 0) {
+            if (!userProvidedString.isEmpty()) {
                 input();
-                System.out.print(Y + molecule + "\n" + N);
-                success(String.valueOf(molecularMass));
+                System.out.print(Y + userProvidedString + "\n" + N);
             }
 
-            // Gets a valid molecule or exit message
-            molecule = getValidString(regex);
+            // Gets a valid userProvidedString or exit message
+            userProvidedString = getValidString(regex);
 
-            if (molecule.matches(OPS_DEFAULT)) {
+            if (userProvidedString.matches(OPS_DEFAULT)) {
                 close = true;
             } else {
-                molecularMass = 0;
+                close = false;
             }
         } while (!close);
         exit();
@@ -244,25 +182,11 @@ public class Main {
      * Method that shows a little goodbye message and exits the program.
      */
     private static void exit() {
-        String[] animation = {EXIT_MESSAGE, BLOSSOM, BUBBLES, DOUCHEBAG};
-        for (String frame : animation) {
+        int[] frameSequence = {1, 0, 1, 2, 1, 0, 1};
+        for (int index : frameSequence) {
             flush();
-            if (frame.equals(EXIT_MESSAGE)) {
-                System.out.println();
-                for (String line : frame.split("\n")) {
-                    display(line);
-                    sleep(200);
-                }
-                int[] frameSequence = {1, 0, 1, 2, 1, 0, 1};
-                for(int index : frameSequence){
-                    flush();
-                    System.out.println(EXPLOSION_FRAMES[index]);
-                    sleep(100);
-                }
-            } else {
-                success(frame);
-                sleep(1000);
-            }
+            System.out.println(EXIT_ANIMATION_FRAMES[index]);
+            sleep(100);
         }
         System.exit(0);
     }
