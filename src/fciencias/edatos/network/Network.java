@@ -227,4 +227,22 @@ public class Network implements LabeledGraph<Station> {
             throw new UnstableGraphException("A graph with odd number of odd degree vertices was found, this can't be a valid graph.");
         return acc;
     }
+
+    /**
+     * Retrieves all the clients currently in the network, as a sorted list.
+     *
+     * @return Sorted list with all the clients in the Network.
+     */
+    public ArrayList<Client> getAllClients() {
+        // Exhaustively expand the graph.
+        int n = verticesSize();
+        ArrayList<Client> clients = new ArrayList<>(n * 5);
+        // Iterate over stations.
+        Enumeration<Station> stations = this.stations.elements();
+        while (stations.hasMoreElements()) {
+            clients.addAll(stations.nextElement().getClients());
+        }
+        Collections.sort(clients);
+        return clients;
+    }
 }

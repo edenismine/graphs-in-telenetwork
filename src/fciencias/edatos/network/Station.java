@@ -18,7 +18,7 @@ import java.util.HashSet;
  * @author Jorge Cortes Lopez.
  * @author Kai Ueda Kawasaki.
  */
-public class Station {
+public class Station implements Comparable<Station> {
 
     /**
      * Taken area codes.
@@ -213,5 +213,15 @@ public class Station {
     @Override
     public int hashCode() {
         return areaCode;
+    }
+
+    @Override
+    public int compareTo(Station o) {
+        // This is less than o
+        if (this.areaCode < o.areaCode) return -1;
+        // This is equal to o
+        if (this.areaCode == o.areaCode) return 0;
+        // This is greater than o
+        return 1;
     }
 }

@@ -27,13 +27,15 @@ public class Main {
     private static final String Y = "\u001B[93m"; // yellow, prompt.
     private static final String C = "\u001B[96m"; // blue, display.
     private static final String OPS_DEFAULT = "[xX]";
-    private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "|sendPubBy (phone|areaCode)|sendPubBy";
+    private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "[\\-\\.]\\d{8}" + "|sendPubBy\\s+(phone|areaCode)|sendPubBy\\s+" + AREA_CODE;
     private static final String EXIT_MESSAGE = "1\n2\n3\n4";
     private static final String[] OPS_LOADED_DESCRIPTIONS = {
             "To place a call use the following syntax:" + G + "\n\tcall areaCode-XXXXXXXX areaCode-XXXXXXXX" + Y + "\n\texample: 'call 55-12345678 801-22334455'" + N,
             "To send publicity to all clients in order use:" + G + "\n\tsendPubBy (phone|areaCode)" + Y + "\n\texample: 'sendPubBy phone'" + N,
             "To send publicity to clients of a specific station:" + G + "\n\tsendPubBy areaCode" + Y + "\n\texample: 'sendPubBy 55'" + N};
-    private static final String[] OPS_LOADED_REGEX = {"call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE};
+    private static final String[] OPS_LOADED_REGEX = {"call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "[\\-\\.]\\d{8}",
+            "sendPubBy\\s+(phone|areaCode)",
+            "sendPubBy\\s+" + AREA_CODE};
     private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
     private static final String RESOURCES = "resources/";
     private static final Network NETWORK = loadNetwork(); // TODO: This must be the topmost statement.
@@ -71,6 +73,23 @@ public class Main {
         builder.deleteCharAt(builder.length() - 1);
         builder.append(')');
         return builder.toString();
+    }
+
+    /**
+     * Initializer method tasked with setting appropriate dimensions for the
+     * CLI, as well as facilitating the reference to {@link java.lang.System#in}.
+     *
+     * @param args the arguments with which the program was run
+     */
+    private static void init(String[] args) {
+        stdin = new Scanner(System.in);
+        try {
+            cols = Integer.parseInt(args[0]);
+            if (cols < 0)
+                throw new NumberFormatException();
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            cols = 80;
+        }
     }
 
     /**
@@ -113,27 +132,50 @@ public class Main {
             if (userProvidedString.matches(OPS_DEFAULT)) {
                 close = true;
             } else {
-                close = false;
+                advancedTask(userProvidedString);
             }
         } while (!close);
         exit();
     }
 
     /**
-     * Initializer method tasked with setting appropriate dimensions for the
-     * CLI, as well as facilitating the reference to {@link java.lang.System#in}.
+     * This method is in charge of handling the different instructions available
+     * to the user, updating the program's attributes accordingly and returning
+     * a descriptive message. It decides which task to perform by analyzing the
+     * provided String.
      *
-     * @param args the arguments with which the program was run
+     * @param task String that represents the task that should be performed.
+     * @return a descriptive message with information about what was done or
+     * could not be done.
      */
-    private static void init(String[] args) {
-        stdin = new Scanner(System.in);
-        try {
-            cols = Integer.parseInt(args[0]);
-            if (cols < 0)
-                throw new NumberFormatException();
-        } catch (IndexOutOfBoundsException | NumberFormatException e) {
-            cols = 80;
+    private static String advancedTask(String task) {
+        String message = "Encountered an error while managing the following task: " + task;
+        String string;
+        if (!task.isEmpty()) {
+            int taskID = -1;
+            for (int i = 0; i < OPS_LOADED_REGEX.length; i++) {
+                if (task.matches(OPS_LOADED_REGEX[i])) {
+                    taskID = i;
+                    break;
+                }
+            }
+            switch (taskID) {
+                case 0:
+                    success(message);
+                    break;
+                case 1:
+                    success(message);
+                    break;
+                case 2:
+                    success(message);
+                    break;
+                default:
+                    break;
+            }
+            return message;
         }
+        message = "Invalid task: " + task;
+        return message;
     }
 
     /**
