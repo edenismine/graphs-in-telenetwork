@@ -218,9 +218,9 @@ public class Main {
                         while (iter.hasNext()) {
                             Station station = iter.next();
                             if (iter.hasNext()) {
-                                builder.append(station.getAreaCode()).append(" : ").append(station.getStationName()).append(separator);
+                                builder.append("\t").append(station.getAreaCode()).append(" : ").append(station.getStationName()).append(separator).append("\n");
                             } else {
-                                builder.append(station.getAreaCode()).append(" : ").append(station.getStationName());
+                                builder.append("\t").append(station.getAreaCode()).append(" : ").append(station.getStationName());
                             }
                         }
                         message = builder.toString();
