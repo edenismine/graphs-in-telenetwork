@@ -31,7 +31,7 @@ public class Main {
     private static final String BLOSSOM = "";
     private static final String BUBBLES = "";
     private static final String DOUCHEBAG = "";
-    private static final String[] EXIT_ANIMATION_FRAMES = {};
+    private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
     private static final String RESOURCES = "resources/";
     private static final Network NETWORK = loadNetwork();
     private static Scanner stdin;

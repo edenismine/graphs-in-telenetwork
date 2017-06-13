@@ -1,36 +1,178 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Network SYSTEM "Network.dtd">
-<Network stations="5" links="4">
-    <Station name="Ciudad de Mexico" code="1">
-        <Client name="Carlos" phone="56581111"/>
-        <Client name="Joaquin" phone="55667788"/>
+<Network links="50" stations="25">
+    <Station code="55" name="Mexico City">
+        <Client name="Alejandro Rodriguez" phone="83690016"/>
+        <Client name="Manuel Ueda" phone="79803175"/>
+        <Client name="Ignacio Martinez" phone="31272896"/>
+        <Client name="Alejandra Lopez" phone="01640458"/>
+        <Client name="Elizabeth Gonzalez" phone="77042115"/>
     </Station>
-
-    <Station name="Morelia" code="2">
-        <Client name="Pedro" phone="55771122"/>
+    <Station code="81" name="Monterrey, Nuevo Leon">
+        <Client name="Alejandro Flores" phone="53147642"/>
+        <Client name="Miguel Lopez" phone="67914956"/>
     </Station>
-
-    <Station name="Cuernavaca" code="3">
-        <Client name="Raúl" phone="55443322"/>
+    <Station code="33" name="Guadalajara, Jalisco">
+        <Client name="Jorge Rodriguez" phone="80134332"/>
+        <Client name="Jose Sanchez" phone="61191764"/>
+        <Client name="Miguel Rodriguez" phone="08555489"/>
     </Station>
-
-    <Station name="Pachuca" code="4">
-        <Client name="Luis" phone="11223311"/>
+    <Station code="656" name="Ciudad Juarez, Chihuahua">
+        <Client name="Antonio Martinez" phone="65593060"/>
+        <Client name="Josefina Kawasaki" phone="73643940"/>
+        <Client name="Jose Garcia" phone="34565818"/>
+        <Client name="Luis Lopez" phone="88111420"/>
+        <Client name="Rosa Hernandez" phone="68721880"/>
     </Station>
-
-    <Station name="Tlaxcala" code="5">
-        <Client name="Juan" phone="55443322"/>
+    <Station code="614" name="Chihuahua, Chihuahua">
+        <Client name="Jose Lopez" phone="18050064"/>
     </Station>
-
-    <Link stationACode="1" stationBCode="2"/>
-
-    <Link stationACode="2" stationBCode="4"/>
-
-    <Link stationACode="4" stationBCode="5"/>
-
-    <Link stationACode="3" stationBCode="1"/>
-
+    <Station code="999" name="Merida, Yucatan">
+        <Client name="Miguel Gonzalez" phone="08761545"/>
+        <Client name="Alicia Lopez" phone="14475200"/>
+    </Station>
+    <Station code="222" name="Puebla, Puebla">
+        <Client name="Carlos Kawasaki" phone="81646579"/>
+        <Client name="Liz Hernandez" phone="98063719"/>
+        <Client name="Antonio Flores" phone="35687010"/>
+        <Client name="Josefina Lopez" phone="61118244"/>
+    </Station>
+    <Station code="442" name="Queretaro, Queretaro">
+        <Client name="Jose Gonzalez" phone="83916661"/>
+        <Client name="Jorge Arguello" phone="24656388"/>
+        <Client name="Carlos Garcia" phone="41680604"/>
+    </Station>
+    <Station code="449" name="Aguascalientes, Aguascalientes">
+        <Client name="Ignacio Perez" phone="16271483"/>
+        <Client name="Ignacio Martinez" phone="86157492"/>
+        <Client name="Patricia Garcia" phone="32419414"/>
+        <Client name="Daniel Arguello" phone="10546251"/>
+        <Client name="Rosa Perez" phone="83293492"/>
+    </Station>
+    <Station code="664" name="Tijuana, Baja California">
+        <Client name="Kai Arguello" phone="68938753"/>
+    </Station>
+    <Station code="844" name="Saltillo, Coahuila">
+        <Client name="Alejandro Ueda" phone="55794688"/>
+    </Station>
+    <Station code="686" name="Mexicali, Baja California">
+        <Client name="Antonio Lopez" phone="52441657"/>
+        <Client name="Antonio Ramirez" phone="63454797"/>
+        <Client name="Rosa Aragon" phone="65257808"/>
+        <Client name="Margarita Martinez" phone="34816426"/>
+        <Client name="Liz Ramirez" phone="99656853"/>
+    </Station>
+    <Station code="667" name="Culiacan, Sinaloa">
+        <Client name="Elizabeth Garcia" phone="89961161"/>
+    </Station>
+    <Station code="722" name="Toluca, Mexico">
+        <Client name="Maria Flores" phone="37413974"/>
+        <Client name="Francisco Ueda" phone="02345228"/>
+        <Client name="Manuel Garcia" phone="31297728"/>
+        <Client name="Miguel Perez" phone="98203052"/>
+    </Station>
+    <Station code="998" name="Cancun, Quintana Roo">
+        <Client name="Luis Rodriguez" phone="93486878"/>
+        <Client name="Rosa Perez" phone="91389658"/>
+        <Client name="Margarita Kawasaki" phone="15753944"/>
+    </Station>
+    <Station code="871" name="Torreon, Coahuila">
+        <Client name="Jorge Arguello" phone="83513423"/>
+        <Client name="Elizabeth Kawasaki" phone="69457375"/>
+        <Client name="Alejandro Rodriguez" phone="16535177"/>
+        <Client name="Carlos Aragon" phone="88241816"/>
+    </Station>
+    <Station code="744" name="Acapulco, Guerrero">
+        <Client name="Alicia Ramirez" phone="21664464"/>
+        <Client name="Carlos Bermudez" phone="67306231"/>
+        <Client name="Alejandro Lopez" phone="81591661"/>
+    </Station>
+    <Station code="444" name="San Luis Potosi, San Luis Potosi">
+        <Client name="Ignacio Lopez" phone="30202085"/>
+    </Station>
+    <Station code="833" name="Tampico, Tamaulipas">
+        <Client name="Manuel Hernandez" phone="19462862"/>
+        <Client name="Kai Gonzalez" phone="63925155"/>
+        <Client name="Josefina Perez" phone="11270566"/>
+        <Client name="Daniel Perez" phone="00323701"/>
+        <Client name="Margarita Aragon" phone="31988143"/>
+    </Station>
+    <Station code="477" name="Leon, Guanjuato">
+        <Client name="Antonio Bermudez" phone="56128110"/>
+        <Client name="Alejandro Perez" phone="65899579"/>
+        <Client name="Alejandra Perez" phone="46467763"/>
+        <Client name="Elizabeth Hernandez" phone="60369424"/>
+        <Client name="Daniel Flores" phone="39100175"/>
+    </Station>
+    <Station code="961" name="Tuxtla Gutierrez, Chiapas">
+        <Client name="Rosa Arguello" phone="05157125"/>
+    </Station>
+    <Station code="662" name="Hermosillo, Sonora">
+        <Client name="Antonio Garcia" phone="01355208"/>
+    </Station>
+    <Station code="229" name="Veracruz, Veracruz">
+        <Client name="Luis Hernandez" phone="93807927"/>
+    </Station>
+    <Station code="443" name="Morelia, Michoacan">
+        <Client name="Daniel Rodriguez" phone="04766432"/>
+    </Station>
+    <Station code="951" name="Oaxaca, Oaxaca">
+        <Client name="Josefina Flores" phone="11529057"/>
+        <Client name="Patricia Kawasaki" phone="02752790"/>
+        <Client name="Francisco Flores" phone="84124733"/>
+        <Client name="Kai Arguello" phone="75272311"/>
+        <Client name="Elizabeth Perez" phone="26251495"/>
+    </Station>
+    <Link stationACode="449" stationBCode="722"/>
+    <Link stationACode="667" stationBCode="871"/>
+    <Link stationACode="951" stationBCode="664"/>
+    <Link stationACode="656" stationBCode="664"/>
+    <Link stationACode="951" stationBCode="844"/>
+    <Link stationACode="449" stationBCode="55"/>
+    <Link stationACode="33" stationBCode="444"/>
+    <Link stationACode="686" stationBCode="961"/>
+    <Link stationACode="722" stationBCode="664"/>
+    <Link stationACode="844" stationBCode="871"/>
+    <Link stationACode="664" stationBCode="222"/>
+    <Link stationACode="33" stationBCode="449"/>
+    <Link stationACode="443" stationBCode="951"/>
+    <Link stationACode="833" stationBCode="55"/>
+    <Link stationACode="662" stationBCode="961"/>
+    <Link stationACode="222" stationBCode="449"/>
+    <Link stationACode="686" stationBCode="871"/>
+    <Link stationACode="222" stationBCode="55"/>
+    <Link stationACode="443" stationBCode="667"/>
+    <Link stationACode="871" stationBCode="656"/>
+    <Link stationACode="686" stationBCode="444"/>
+    <Link stationACode="833" stationBCode="81"/>
+    <Link stationACode="667" stationBCode="662"/>
+    <Link stationACode="662" stationBCode="81"/>
+    <Link stationACode="998" stationBCode="951"/>
+    <Link stationACode="477" stationBCode="222"/>
+    <Link stationACode="81" stationBCode="961"/>
+    <Link stationACode="871" stationBCode="664"/>
+    <Link stationACode="443" stationBCode="844"/>
+    <Link stationACode="444" stationBCode="664"/>
+    <Link stationACode="229" stationBCode="844"/>
+    <Link stationACode="999" stationBCode="662"/>
+    <Link stationACode="444" stationBCode="999"/>
+    <Link stationACode="662" stationBCode="442"/>
+    <Link stationACode="662" stationBCode="55"/>
+    <Link stationACode="961" stationBCode="477"/>
+    <Link stationACode="222" stationBCode="686"/>
+    <Link stationACode="442" stationBCode="33"/>
+    <Link stationACode="449" stationBCode="999"/>
+    <Link stationACode="998" stationBCode="477"/>
+    <Link stationACode="444" stationBCode="477"/>
+    <Link stationACode="951" stationBCode="477"/>
+    <Link stationACode="664" stationBCode="477"/>
+    <Link stationACode="33" stationBCode="951"/>
+    <Link stationACode="33" stationBCode="667"/>
+    <Link stationACode="222" stationBCode="844"/>
+    <Link stationACode="686" stationBCode="55"/>
+    <Link stationACode="614" stationBCode="477"/>
+    <Link stationACode="81" stationBCode="664"/>
+    <Link stationACode="664" stationBCode="229"/>
 </Network>
-
 
 
