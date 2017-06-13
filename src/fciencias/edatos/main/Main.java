@@ -160,12 +160,15 @@ public class Main {
                 }
             }
             switch (taskID) {
+                // placing call
                 case 0:
                     success(message);
                     break;
+                // send publicity to all
                 case 1:
                     success(message);
                     break;
+                // send publicity to some
                 case 2:
                     success(message);
                     break;

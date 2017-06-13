@@ -229,11 +229,11 @@ public class Network implements LabeledGraph<Station> {
     }
 
     /**
-     * Retrieves all the clients currently in the network, as a sorted list.
+     * Retrieves all the clients currently in the network, puts them in a list and sorts them by phone number.
      *
      * @return Sorted list with all the clients in the Network.
      */
-    public ArrayList<Client> getAllClients() {
+    public ArrayList<Client> getAllClientsByPhone() {
         // Exhaustively expand the graph.
         int n = verticesSize();
         ArrayList<Client> clients = new ArrayList<>(n * 5);
@@ -243,6 +243,26 @@ public class Network implements LabeledGraph<Station> {
             clients.addAll(stations.nextElement().getClients());
         }
         Collections.sort(clients);
+        return clients;
+    }
+
+    /**
+     * Retrieves all the clients currently in the network, puts them in a list and sorts them by station.
+     *
+     * @return Sorted list with all the clients in the Network.
+     */
+    public ArrayList<Client> getAllClientsByStation() {
+        // Exhaustively expand the graph.
+        int n = verticesSize();
+        ArrayList<Client> clients = new ArrayList<>(n * 5);
+        ArrayList<Client> stationClients;
+        // Iterate over stations.
+        Enumeration<Station> stations = this.stations.elements();
+        while (stations.hasMoreElements()) {
+            stationClients = new ArrayList<>(stations.nextElement().getClients());
+            Collections.sort(stationClients);
+            clients.addAll(stationClients);
+        }
         return clients;
     }
 }
