@@ -63,6 +63,16 @@ public class Client implements Comparable<Client> {
     public void setPhone(int phone) {
         this.phone = phone;
     }
+    
+    /**
+    * This method prints the client on the screen.
+    * @param client The client to print.   
+    */
+    public void printClient(Client client){
+        System.out.println("Clients name: " + client.getName());
+        System.out.println("Phone number: " + client.getPhone());
+        System.out.print("\n");
+    }
 
     @Override
     public int compareTo(Client o) {
