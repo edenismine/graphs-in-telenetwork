@@ -124,25 +124,90 @@ public class Network implements LabeledGraph<Station> {
     }
 
     /**
-     * This method performs BFS from this node and attempts to reach the station that
-     * corresponds to the provided areaCode.
+     * This method performs BFS from the first station and attempts to reach the second station.
      *
+     * @param a The first station.
+     * @param b The second station.
      * @return The trajectory if it exists, null otherwise.
      */
-    public List<Station> getTrajectory(Station root, int areaCode) {
-        /**
+    public List<Station> getTrajectory(Station a, Station b) {
+        return getTrajectory(a.getAreaCode(), b.getAreaCode());
+    }
+
+    /**
+     * This method performs BFS from the station corresponding to the first label and attempts to reach the station that
+     * corresponds to the second label.
+     *
+     * @param areaCodeA The first label.
+     * @param areaCodeB The second label.
+     * @return The trajectory if it exists, null otherwise.
+     */
+    public List<Station> getTrajectory(int areaCodeA, int areaCodeB) {
+        // If the network is empty, there are no trajectories.
+        if (isEmpty())
+            return new LinkedList<>();
+
+        // Update and validate network.
+        edgesSize();
+
+        // If one of the nodes is not in the network, return empty trajectory.
+        if (!stations.keySet().contains(areaCodeA) || !stations.keySet().contains(areaCodeB))
+            return new LinkedList<>();
+
+        Station root = stations.get(areaCodeA);
+
+        /*
          * This class represent a Parent,Station pair, useful for representing the trajectory as a list.
          */
         class Pair {
             Station parent;
             Station station;
 
-            Pair(Station parent, Station station) {
+            private Pair(Station parent, Station station) {
                 this.parent = parent;
                 this.station = station;
             }
         }
-        return null;
+
+        // Create a set to store visited nodes.
+        HashSet<Station> visited = new HashSet<>();
+        // Queue to remove recursion.
+        Queue<Station> queue = new LinkedList<>();
+        // Begin BFS
+        boolean found = false;
+        LinkedList<Pair> tree = new LinkedList<>();
+        tree.add(new Pair(null, root));
+        visited.add(root);
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            Station current = queue.poll();
+            // If we reach it.
+            if (current.getAreaCode() == areaCodeB) {
+                found = true;
+                break;
+            }
+            // visit all neighbors, and queue them for BFS.
+            for (Station neighbor : current.getNeighbors()) {
+                if (visited.add(neighbor)) {
+                    tree.add(new Pair(current, neighbor));
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        // If the node was reached, extract the trajectory.
+        if (found) {
+            LinkedList<Station> trajectory = new LinkedList<>();
+            Station end = stations.get(areaCodeB);
+            for (int i = tree.size() - 1; i >= 0; i--) {
+                Pair current = tree.get(i);
+                if (current.station.equals(end)) {
+                    trajectory.add(end);
+                    end = current.parent;
+                }
+            }
+            Collections.reverse(trajectory);
+            return trajectory;
+        } else return new LinkedList<>();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package fciencias.edatos.main;
 
+import fciencias.edatos.network.Client;
 import fciencias.edatos.network.Network;
 import fciencias.edatos.network.NetworkLoader;
 import fciencias.edatos.network.Station;
@@ -7,9 +8,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,13 +26,13 @@ public class Main {
     private static final String Y = "\u001B[93m"; // yellow, prompt.
     private static final String C = "\u001B[96m"; // blue, display.
     private static final String OPS_DEFAULT = "[xX]";
-    private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "[\\-\\.]\\d{8}" + "|sendPubBy\\s+(phone|areaCode)|sendPubBy\\s+" + AREA_CODE;
+    private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.](\\d{8})\\s+" + AREA_CODE + "[\\-\\.](\\d{8})" + "|sendPubBy\\s+(phone|areaCode)|sendPubBy\\s+" + AREA_CODE;
     private static final String EXIT_MESSAGE = "1\n2\n3\n4";
     private static final String[] OPS_LOADED_DESCRIPTIONS = {
             "To place a call use the following syntax:" + G + "\n\tcall areaCode-XXXXXXXX areaCode-XXXXXXXX" + Y + "\n\texample: 'call 55-12345678 801-22334455'" + N,
             "To send publicity to all clients in order use:" + G + "\n\tsendPubBy (phone|areaCode)" + Y + "\n\texample: 'sendPubBy phone'" + N,
             "To send publicity to clients of a specific station:" + G + "\n\tsendPubBy areaCode" + Y + "\n\texample: 'sendPubBy 55'" + N};
-    private static final String[] OPS_LOADED_REGEX = {"call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "[\\-\\.]\\d{8}",
+    private static final String[] OPS_LOADED_REGEX = {"call\\s+" + AREA_CODE + "[\\-\\.](\\d{8})\\s+" + AREA_CODE + "[\\-\\.](\\d{8})",
             "sendPubBy\\s+(phone|areaCode)",
             "sendPubBy\\s+" + AREA_CODE};
     private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
@@ -162,19 +161,87 @@ public class Main {
             switch (taskID) {
                 // placing call
                 case 0:
-                    success(message);
+                    int codeA = Integer.parseInt(getGroup(OPS_LOADED_REGEX[0], task, 1));
+                    int phoneA = Integer.parseInt(getGroup(OPS_LOADED_REGEX[0], task, 2));
+                    int codeB = Integer.parseInt(getGroup(OPS_LOADED_REGEX[0], task, 3));
+                    int phoneB = Integer.parseInt(getGroup(OPS_LOADED_REGEX[0], task, 4));
+
+                    Station stationA, stationB;
+                    if (codeA != codeB) {
+                        stationA = NETWORK.getVertex(codeA);
+                        stationB = NETWORK.getVertex(codeB);
+                    } else {
+                        if (phoneA == phoneB) {
+                            message = "Provided phones are identical, one cannot call oneself.";
+                            break;
+                        }
+                        stationA = stationB = NETWORK.getVertex(codeA);
+                    }
+                    if (stationA == null || stationB == null) {
+                        message = "Unable to place call, one of the stations with codes: " + codeA + " and " + codeB + " is not in the network.";
+                        break;
+                    }
+
+                    // Find client A
+                    Client clientA = null;
+                    for (Client client : stationA.getClients()) {
+                        if (client.getPhone() == phoneA) {
+                            clientA = client;
+                            break;
+                        }
+                    }
+
+                    if (clientA == null) {
+                        message = phoneA + " not found in station " + codeA + ". Unable to place call.";
+                        break;
+                    }
+
+                    // Find client B
+                    Client clientB = null;
+                    for (Client client : stationA.getClients()) {
+                        if (client.getPhone() == phoneA) {
+                            clientB = client;
+                            break;
+                        }
+                    }
+
+                    if (clientB == null) {
+                        message = phoneB + " not found in station " + codeB + ". Unable to place call.";
+                        break;
+                    }
+
+                    List<Station> trajectory = NETWORK.getTrajectory(codeA, codeB);
+                    if (!trajectory.isEmpty()) {
+                        StringBuilder builder = new StringBuilder("This is the trajectory between the clients: ");
+                        String separator = " --> ";
+                        Iterator<Station> iter = trajectory.iterator();
+                        while (iter.hasNext()) {
+                            Station station = iter.next();
+                            if (iter.hasNext()) {
+                                builder.append(station.getAreaCode()).append(separator);
+                            } else {
+                                builder.append(station.getAreaCode());
+                            }
+                        }
+                        message = builder.toString();
+                    } else {
+                        message = "Unable to place call, could not find a trajectory between stations: " + codeA + " and " + codeB;
+                    }
+
+                    // call 55-37620764 442-22164248
                     break;
                 // send publicity to all
                 case 1:
-                    success(message);
                     break;
                 // send publicity to some
                 case 2:
-                    success(message);
                     break;
                 default:
                     break;
             }
+            success(task);
+            display(message);
+            sleep(1000);
             return message;
         }
         message = "Invalid task: " + task;

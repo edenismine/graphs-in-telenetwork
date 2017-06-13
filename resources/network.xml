@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Network SYSTEM "Network.dtd">
-<Network links="300" stations="25">
+<Network links="277" stations="25">
     <Station code="55" name="Mexico City">
         <Client name="Alejandro Flores" phone="36451162"/>
         <Client name="Josefina Martinez" phone="50464237"/>
@@ -125,29 +125,6 @@
         <Client name="Maria Gonzalez" phone="44443515"/>
         <Client name="Jose Martinez" phone="45114759"/>
     </Station>
-    <Link stationACode="686" stationBCode="999"/>
-    <Link stationACode="81" stationBCode="443"/>
-    <Link stationACode="722" stationBCode="229"/>
-    <Link stationACode="961" stationBCode="871"/>
-    <Link stationACode="664" stationBCode="722"/>
-    <Link stationACode="844" stationBCode="664"/>
-    <Link stationACode="442" stationBCode="961"/>
-    <Link stationACode="833" stationBCode="477"/>
-    <Link stationACode="871" stationBCode="722"/>
-    <Link stationACode="998" stationBCode="33"/>
-    <Link stationACode="999" stationBCode="656"/>
-    <Link stationACode="844" stationBCode="443"/>
-    <Link stationACode="951" stationBCode="833"/>
-    <Link stationACode="871" stationBCode="33"/>
-    <Link stationACode="222" stationBCode="55"/>
-    <Link stationACode="833" stationBCode="871"/>
-    <Link stationACode="951" stationBCode="443"/>
-    <Link stationACode="614" stationBCode="686"/>
-    <Link stationACode="998" stationBCode="999"/>
-    <Link stationACode="222" stationBCode="614"/>
-    <Link stationACode="222" stationBCode="998"/>
-    <Link stationACode="871" stationBCode="656"/>
-    <Link stationACode="664" stationBCode="33"/>
     <Link stationACode="722" stationBCode="998"/>
     <Link stationACode="999" stationBCode="55"/>
     <Link stationACode="844" stationBCode="961"/>
