@@ -27,12 +27,12 @@ public class Main {
     private static final String Y = "\u001B[93m"; // yellow, prompt.
     private static final String C = "\u001B[96m"; // blue, display.
     private static final String OPS_DEFAULT = "[xX]";
-    private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "|publicity (phone|areaCode)";
+    private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "|sendPubBy (phone|areaCode)|sendPubBy";
     private static final String EXIT_MESSAGE = "1\n2\n3\n4";
     private static final String[] OPS_LOADED_DESCRIPTIONS = {
             "To place a call use the following syntax:" + G + "\n\tcall areaCode-XXXXXXXX areaCode-XXXXXXXX" + Y + "\n\texample: 'call 55-12345678 801-22334455'" + N,
-            "To send publicity to all clients use:" + G + "\n\tpublicity (phone|areaCode)" + Y + "\n\texample: 'publicity phone'" + N,
-            "To send publicity to all clients use:" + G + "\n\tpublicity (phone|areaCode)" + Y + "\n\texample: 'publicity phone'" + N};
+            "To send publicity to all clients in order use:" + G + "\n\tsendPubBy (phone|areaCode)" + Y + "\n\texample: 'sendPubBy phone'" + N,
+            "To send publicity to clients of a specific station:" + G + "\n\tsendPubBy areaCode" + Y + "\n\texample: 'sendPubBy 55'" + N};
     private static final String[] OPS_LOADED_REGEX = {"call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE};
     private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
     private static final String RESOURCES = "resources/";
@@ -41,6 +41,11 @@ public class Main {
     private static Scanner stdin;
     private static int cols;
 
+    /**
+     * This method loads the network from disk.
+     *
+     * @return The Network, or null if the parse was not successful.
+     */
     private static Network loadNetwork() {
         Network network = null;
         try {
@@ -51,6 +56,11 @@ public class Main {
         return network;
     }
 
+    /**
+     * This method loads the stations' area codes and creates the appropriate regex.
+     *
+     * @return Regex that represents all loaded area codes.
+     */
     private static String loadAreaCodes() {
         ArrayList<Integer> areaCodes = Station.getAreaCodes();
         if (areaCodes.size() == 0) return "ERROR";
