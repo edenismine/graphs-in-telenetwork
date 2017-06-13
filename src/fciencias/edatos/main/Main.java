@@ -2,10 +2,13 @@ package fciencias.edatos.main;
 
 import fciencias.edatos.network.Network;
 import fciencias.edatos.network.NetworkLoader;
+import fciencias.edatos.network.Station;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,22 +20,24 @@ import java.util.regex.Pattern;
  * @author Luis Daniel Aragon Bermudez 416041271
  */
 public class Main {
-    private static final String TITLE = "Network manager";
+    private static final String AREA_CODE = loadAreaCodes(); // TODO: ensure this line is always below the initialization of NETWORK.
     private static final String N = "\u001B[0m"; // resets terminal color
     private static final String R = "\u001B[91m"; // red, error.
     private static final String G = "\u001B[92m"; // green, success.
     private static final String Y = "\u001B[93m"; // yellow, prompt.
     private static final String C = "\u001B[96m"; // blue, display.
     private static final String OPS_DEFAULT = "[xX]";
-    private static final String OPS_LOADED = OPS_DEFAULT;
+    private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE + "|publicity (phone|areaCode)";
     private static final String EXIT_MESSAGE = "1\n2\n3\n4";
     private static final String[] OPS_LOADED_DESCRIPTIONS = {
             "To place a call use the following syntax:" + G + "\n\tcall areaCode-XXXXXXXX areaCode-XXXXXXXX" + Y + "\n\texample: 'call 55-12345678 801-22334455'" + N,
-            "To enter the publicity manager use:" + G + "\n\tpublicity (phone|areaCode)" + Y + "\n\texample: 'publicity phone'" + N};
-    private static final String[] OPS_LOADED_REGEX = {""};
+            "To send publicity to all clients use:" + G + "\n\tpublicity (phone|areaCode)" + Y + "\n\texample: 'publicity phone'" + N,
+            "To send publicity to all clients use:" + G + "\n\tpublicity (phone|areaCode)" + Y + "\n\texample: 'publicity phone'" + N};
+    private static final String[] OPS_LOADED_REGEX = {"call\\s+" + AREA_CODE + "[\\-\\.]\\d{8}\\s+" + AREA_CODE};
     private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
     private static final String RESOURCES = "resources/";
-    private static final Network NETWORK = loadNetwork();
+    private static final Network NETWORK = loadNetwork(); // TODO: This must be the topmost statement.
+    private static final String TITLE = NETWORK != null ? "Network manager" : "ERROR";
     private static Scanner stdin;
     private static int cols;
 
@@ -44,6 +49,18 @@ public class Main {
             error(e.getMessage());
         }
         return network;
+    }
+
+    private static String loadAreaCodes() {
+        ArrayList<Integer> areaCodes = Station.getAreaCodes();
+        if (areaCodes.size() == 0) return "ERROR";
+        Collections.sort(areaCodes, Collections.reverseOrder());
+        StringBuilder builder = new StringBuilder().append("(");
+        for (int code : areaCodes)
+            builder.append(code).append('|');
+        builder.deleteCharAt(builder.length() - 1);
+        builder.append(')');
+        return builder.toString();
     }
 
     /**

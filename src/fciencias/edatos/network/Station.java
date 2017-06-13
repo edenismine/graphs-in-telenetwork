@@ -2,6 +2,7 @@ package fciencias.edatos.network;
 
 import fciencias.edatos.util.UnstableGraphException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -61,6 +62,17 @@ public class Station {
         } else {
             throw new IllegalArgumentException("Stations must have at least one client");
         }
+    }
+
+    /**
+     * Static method for retrieving all area codes created since runtime began.
+     *
+     * @return all area codes.
+     */
+    public static ArrayList<Integer> getAreaCodes() {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.addAll(TAKEN_AREA_CODES);
+        return list;
     }
 
     /**

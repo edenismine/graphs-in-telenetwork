@@ -123,6 +123,28 @@ public class Network implements LabeledGraph<Station> {
         return stations.size();
     }
 
+    /**
+     * This method performs BFS from this node and attempts to reach the station that
+     * corresponds to the provided areaCode.
+     *
+     * @return The trajectory if it exists, null otherwise.
+     */
+    public List<Station> getTrajectory(int areaCode) {
+        /**
+         * This class represent a Parent,Station pair, useful for representing the trajectory as a list.
+         */
+        class Pair {
+            Station parent;
+            Station station;
+
+            Pair(Station parent, Station station) {
+                this.parent = parent;
+                this.station = station;
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean isEmpty() {
         return stations.size() == 0;
