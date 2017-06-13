@@ -28,7 +28,6 @@ public class Main {
     private static final String C = "\u001B[96m"; // blue, display.
     private static final String OPS_DEFAULT = "[xX]";
     private static final String OPS_LOADED = OPS_DEFAULT + "|call\\s+" + AREA_CODE + "[\\-\\.](\\d{8})\\s+" + AREA_CODE + "[\\-\\.](\\d{8})" + "|sendPubBy\\s+(phone|areaCode)|sendPubBy\\s+" + AREA_CODE;
-    private static final String EXIT_MESSAGE = "1\n2\n3\n4";
     private static final String[] OPS_LOADED_DESCRIPTIONS = {
             "To place a call use the following syntax:" + G + "\n\tcall areaCode-XXXXXXXX areaCode-XXXXXXXX" + Y + "\n\texample: 'call 55-12345678 801-22334455'" + N,
             "To send publicity to all clients in order use:" + G + "\n\tsendPubBy (phone|areaCode)" + Y + "\n\texample: 'sendPubBy phone'" + N,
@@ -36,7 +35,7 @@ public class Main {
     private static final String[] OPS_LOADED_REGEX = {"call\\s+" + AREA_CODE + "[\\-\\.](\\d{8})\\s+" + AREA_CODE + "[\\-\\.](\\d{8})",
             "sendPubBy\\s+(phone|areaCode)",
             "sendPubBy\\s+" + AREA_CODE};
-    private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
+    private static final String[] EXIT_ANIMATION_FRAMES = {"1", "2", "3"};
     private static final String RESOURCES = "resources/";
     private static final String TITLE = NETWORK != null ? "Network manager" : "ERROR";
     private static Scanner stdin;
@@ -149,7 +148,6 @@ public class Main {
      */
     private static String advancedTask(String task) {
         String message = "Encountered an error while managing the following task: " + task;
-        String string;
         if (!task.isEmpty()) {
             int taskID = -1;
             for (int i = 0; i < OPS_LOADED_REGEX.length; i++) {
@@ -223,12 +221,25 @@ public class Main {
                                 builder.append("\t").append(station.getAreaCode()).append(" : ").append(station.getStationName());
                             }
                         }
+
+                        int edges = NETWORK.quickEdgesSize();
+                        if (trajectory.size() - 1 <= edges / 2) {
+                            display("MESSAGE TO THE USER: Would you like to use video?");
+                            char choice = getValidString("[Yy][Ee][Ss]|[Nn][Oo]|[Yy]|[Nn]").toLowerCase().charAt(0);
+                            switch (choice) {
+                                case 'y':
+                                    builder.append(Y).append("\nVideo call in progress.").append(N);
+                                    break;
+                                case 'n':
+                                    builder.append(Y).append("\nPhone call in progress.").append(N);
+                                    break;
+                            }
+                        }
+
                         message = builder.toString();
                     } else {
                         message = "Unable to place call, could not find a trajectory between stations: " + codeA + " and " + codeB;
                     }
-
-                    // call 55-37620764 442-22164248
                     break;
                 // send publicity to all
                 case 1:
@@ -257,8 +268,8 @@ public class Main {
                 default:
                     break;
             }
-            display(message);
-            display("Press enter to return");
+            success(message);
+            display(R + "\nPress enter to return" + N);
             getValidString(".*");
             return message;
         }
