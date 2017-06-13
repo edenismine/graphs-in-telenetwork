@@ -25,12 +25,11 @@ public class Main {
     private static final String C = "\u001B[96m"; // blue, display.
     private static final String OPS_DEFAULT = "[xX]";
     private static final String OPS_LOADED = OPS_DEFAULT;
-    private static final String EXIT_MESSAGE = "    \tLOOK WHAT YOU JUST DID!\n        \tYOU DROPPED CHEMICAL X!\n" + "\t\t .----------------. \n" + "\t\t| .--------------. |\n" + "\t\t| |  ____  ____  | |\n" + "\t\t| | |_  _||_  _| | |\n" + "\t\t| |   \\ \\  / /   | |\n" + "\t\t| |    > `' <    | |\n" + "\t\t| |  _/ /'`\\ \\_  | |\n" + "\t\t| | |____||____| | |\n" + "\t\t| |              | |\n" + "\t\t| '--------------' |\n" + "\t\t '----------------'";
-    private static final String[] OPS_LOADED_DESCRIPTIONS = {"input molecules as follows: \n\t" + G + "symbols followed by number of atoms, separated using '.'\n\texample: 'H2.O'" + N};
+    private static final String EXIT_MESSAGE = "1\n2\n3\n4";
+    private static final String[] OPS_LOADED_DESCRIPTIONS = {
+            "To place a call use the following syntax:" + G + "\n\tcall areaCode-XXXXXXXX areaCode-XXXXXXXX" + Y + "\n\texample: 'call 55-12345678 801-22334455'" + N,
+            "To enter the publicity manager use:" + G + "\n\tpublicity (phone|areaCode)" + Y + "\n\texample: 'publicity phone'" + N};
     private static final String[] OPS_LOADED_REGEX = {""};
-    private static final String BLOSSOM = "";
-    private static final String BUBBLES = "";
-    private static final String DOUCHEBAG = "";
     private static final String[] EXIT_ANIMATION_FRAMES = {"", "", ""};
     private static final String RESOURCES = "resources/";
     private static final Network NETWORK = loadNetwork();
@@ -166,25 +165,11 @@ public class Main {
      * Method that shows a little goodbye message and exits the program.
      */
     private static void exit() {
-        String[] animation = {EXIT_MESSAGE, BLOSSOM, BUBBLES, DOUCHEBAG};
-        for (String frame : animation) {
+        int[] frameSequence = {1, 0, 1, 2, 1, 0, 1};
+        for (int index : frameSequence) {
             flush();
-            if (frame.equals(EXIT_MESSAGE)) {
-                System.out.println();
-                for (String line : frame.split("\n")) {
-                    display(line);
-                    sleep(200);
-                }
-                int[] frameSequence = {1, 0, 1, 2, 1, 0, 1};
-                for(int index : frameSequence){
-                    flush();
-                    System.out.println(EXIT_ANIMATION_FRAMES[index]);
-                    sleep(100);
-                }
-            } else {
-                success(frame);
-                sleep(1000);
-            }
+            System.out.println(EXIT_ANIMATION_FRAMES[index]);
+            sleep(100);
         }
         System.exit(0);
     }

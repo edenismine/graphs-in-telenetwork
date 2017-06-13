@@ -7,7 +7,7 @@ package fciencias.edatos.network;
  * @author Jorge Cortes Lopez.
  * @author Kai Ueda Kawasaki.
  */
-public class Client {
+public class Client implements Comparable<Client> {
     /**
      * The client's name.
      */
@@ -62,5 +62,15 @@ public class Client {
      */
     public void setPhone(int phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public int compareTo(Client o) {
+        // is less than
+        if (this.phone < o.phone) return -1;
+        // is equal to
+        if (this.phone == o.phone) return 0;
+        // is greater than
+        return 1;
     }
 }
