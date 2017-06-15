@@ -13,8 +13,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <p>Main class. It implements a command line interface (henceforth referenced as CLI)
- * that allows the user to ...
+ * <p>Main class. It implements a command line interface (henceforth referenced as CLI).
+ * This program allows two clients to communicate through a phone call if the stations are linked or if there's a
+ * route through a number of stations that allows the original two to connect (More formally, a trajectory), and
+ * allows clients to use the video service if said route uses less than or half of the links in the whole network.
+ * This program also allows the company to send publicity to all the clients in order of: phone number or station's
+ * area code, then phone number. Finally, this program allows the company to send publicity to all the clients within
+ * a station.
  *
  * @author Luis Daniel Aragon Bermudez 416041271
  */
