@@ -17,6 +17,8 @@ import java.util.HashSet;
 
 
 /**
+ * This class implements a functioning parser. Is able to construct a valid Network from an xml file.
+ *
  * @author Luis Daniel Aragon Bermudez 416041271
  */
 public class NetworkLoader implements ToXML<Network> {

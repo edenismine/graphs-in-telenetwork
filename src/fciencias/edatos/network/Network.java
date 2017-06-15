@@ -6,7 +6,7 @@ import fciencias.edatos.util.UnstableGraphException;
 import java.util.*;
 
 /**
- * TODO: JavaDoc
+ * This class represents a labeled undirected simple graph that models a telecommunications network.
  *
  * @author Luis Daniel Aragon Bermudez 416041271
  */
