@@ -4,8 +4,6 @@ package fciencias.edatos.network;
  * Client class. Represents clients connected to the network through the stations.
  *
  * @author Luis Daniel Aragon Bermudez.
- * @author Jorge Cortes Lopez.
- * @author Kai Ueda Kawasaki.
  */
 public class Client implements Comparable<Client> {
     /**
