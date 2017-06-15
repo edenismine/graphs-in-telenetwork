@@ -22,6 +22,15 @@ public class Network implements LabeledGraph<Station> {
             throw new IllegalArgumentException("Vertex labels must be non-negative. Vertices must be non-null.");
         if (label != vertex.getAreaCode()) throw new UnstableGraphException("The provided areaCode does not match.");
         Station previous = stations.put(label, vertex);
+        if (previous != null) {
+            // If station got replaced, repair and add links.
+            Station current = stations.get(label);
+            HashSet<Station> neighbors = previous.getNeighbors();
+            neighbors.addAll(current.getNeighbors());
+            for (Station neighbor : neighbors) {
+                current.isAdjacent(neighbor);
+            }
+        }
         return previous == null || previous.equals(vertex);
     }
 
