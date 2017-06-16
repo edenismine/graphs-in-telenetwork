@@ -115,11 +115,9 @@ where each *Station* tag represents a chemical element with corresponding `name`
 In order to create a random xml that adheres to the aforementioned Network.dtd, the following python script was created (source code in `resources/stations.py`):
 
 ``` python
-from xml.etree.ElementTree import ElementTree as Tree
-from xml.etree.ElementTree import Element as Elem
 from random import randint
-import xml.etree.ElementTree as e_tree
-import os
+from xml.etree.ElementTree import Element as Elem
+from xml.etree.ElementTree import ElementTree as Tree
 
 
 F_NAMES = """Luis
