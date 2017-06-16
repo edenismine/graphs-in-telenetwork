@@ -168,7 +168,7 @@ While `F_NAMES` and `L_NAMES` hold random first names and last names respectivel
 # Using the program
 The program explains the options available to the user when it's first launched. It uses [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) for all its user input validation, hence it's pretty robust, it won't accept invalid options or incorrect syntax.
 
-![Welcome screen.](./home.png){ width=60% }
+![Welcome screen.](./resources/doc-files/home.png){ width=60% }
 
 ## Making a call
 In order for a call to be successful, first of all the specified phone numbers must exist within their corresponding area codes. If both clients are accounted for by their respective stations, a route is then calculated. If the resulting route is shorter (in terms of links traversed) than or equal to the number of links within the whole network, the program asks the client if they wish to use video. Using standard yes or no answers, the call is placed with the appropriate conditions.
