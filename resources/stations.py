@@ -1,6 +1,8 @@
-from random import randint
-from xml.etree.ElementTree import Element as Elem
 from xml.etree.ElementTree import ElementTree as Tree
+from xml.etree.ElementTree import Element as Elem
+from random import randint
+import xml.etree.ElementTree as e_tree
+import os
 
 F_NAMES = """Luis
 Daniel

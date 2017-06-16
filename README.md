@@ -108,7 +108,7 @@ In order to properly load the provided `network.xml` into the structure, the `Ne
 </Network>
 ```
 
-where each *Station* tag represents a chemical element with corresponding `name` (self-explanatory), and `code` (unique area code), and each *Link* tag represents a link between the stations with codes `stationACode` and `stationACode`. Also, every *Station* tag has a number of *Client* tags which represent the station's clients and each have attributes `name` and `phone` (both, self-explanatory).
+where each *Station* tag represents a chemical element with corresponding `name` (self-explanatory), and `code` (unique area code), and each *Link* tag represents a link between the stations with codes `stationACode` and `stationBCode`. Also, every *Station* tag has a number of *Client* tags which represent the station's clients and each have attributes `name` and `phone` (both, self-explanatory).
 
 ### Random network generation script
 
